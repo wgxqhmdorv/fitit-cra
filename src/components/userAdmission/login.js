@@ -1,28 +1,28 @@
 import { Auth } from "aws-amplify";
-import React, { useState } from "react";
+import React from "react";
 import { connect } from "react-redux";
 import styled from "styled-components";
 import { userLoggedIn } from "../../redux/features/authSlice";
 import withLayout from "../layout/withLayout";
 import Button from "./childComponents/button";
 import InputForm from "./childComponents/inputForm";
+import useFormFields from "./childComponents/formHook";
 
 const Login = ({ userLoggedIn }) => {
-  const [username, setUsername] = useState("");
-  const [pass, setPass] = useState("");
+  const [fields, handleFieldChange] = useFormFields({
+    username: "",
+    password: ""
+  });
 
   const handleOnSubmit = async event => {
     event.preventDefault();
 
     try {
-      await Auth.signIn(username, pass);
+      await Auth.signIn(fields.username, fields.password);
       userLoggedIn();
     } catch (e) {
       console.log(e.message);
     }
-
-    setUsername("");
-    setPass("");
   };
 
   return (
@@ -32,15 +32,15 @@ const Login = ({ userLoggedIn }) => {
         <InputForm
           name="Username"
           type="text"
-          value={username}
-          onChange={event => setUsername(event.target.value)}
+          value={fields.username}
+          onChange={handleFieldChange}
           placeholder="Enter your username"
         />
         <InputForm
           name="Password"
           type="password"
-          value={pass}
-          onChange={event => setPass(event.target.value)}
+          value={fields.password}
+          onChange={handleFieldChange}
           placeholder="Enter your password"
         />
         <Button type="submit" name="Login" />

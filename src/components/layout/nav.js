@@ -25,7 +25,7 @@ const Nav = ({ isVisible, isAuthenticated, userLoggedOut }) => {
           <LinkButton href="register" active={active} setActive={setActive} />
         </>
       ) : (
-        <LinkButton href="logout" active={active} setActive={setActive} />
+        <button onClick={handleLogout}>Logout</button>
       )}
     </Navx>
   );

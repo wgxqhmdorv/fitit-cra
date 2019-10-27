@@ -1,68 +1,104 @@
-import React, { useState } from "react";
+import { Auth } from "aws-amplify";
 import styled from "styled-components";
+import React, { useState } from "react";
 import withLayout from "../layout/withLayout";
 import Button from "./childComponents/button";
 import InputForm from "./childComponents/inputForm";
+import useFormFields from "./childComponents/formHook";
+import { userLoggedIn } from "../../redux/features/authSlice";
+import { connect } from "react-redux";
 
-const Register = () => {
-  const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
-  const [pass, setPass] = useState("");
-  const [passConfirmation, setPassConfirmation] = useState("");
+const Register = ({ userLoggedIn }) => {
+  const [fields, handleFieldChange] = useFormFields({
+    email: "",
+    password: "",
+    passwordConfirmation: "",
+    verificationCode: ""
+  });
+  const [isNewUser, setNewUser] = useState(null);
 
-  const handleOnSubmit = event => {
+  const handleSubmit = async event => {
     event.preventDefault();
-    console.log(username);
-    console.log(email);
-    console.log(pass);
-    setUsername("");
-    setEmail("");
-    setPass("");
-    setPassConfirmation("");
+
+    try {
+      const newUser = await Auth.signUp({
+        username: fields.email,
+        password: fields.password
+      });
+      setNewUser(newUser);
+    } catch (e) {
+      alert(e.message);
+    }
   };
 
-  return (
-    <Form onSubmit={handleOnSubmit} id="register-form">
+  const handleConfirmationSubmit = async event => {
+    event.preventDefault();
+
+    try {
+      await Auth.confirmSignUp(fields.email, fields.verificationCode);
+      await Auth.signIn(fields.email, fields.password);
+
+      userLoggedIn();
+    } catch (e) {
+      alert(e.message);
+    }
+  };
+
+  const renderRegisterForm = () => (
+    <Form onSubmit={handleSubmit} id="register-form">
       <Container id="register-form-div">
         <Label>Create an account</Label>
         <InputForm
-          name="Username"
-          type="text"
-          value={username}
-          onChange={event => setUsername(event.target.value)}
-          placeholder="Enter your username"
-        />
-        <InputForm
           name="Email"
           type="text"
-          value={email}
-          onChange={event => setEmail(event.target.value)}
+          value={fields.email}
+          onChange={handleFieldChange}
           placeholder="Enter your email"
         />
         <InputForm
           name="Password"
           type="password"
-          value={pass}
-          onChange={event => setPass(event.target.value)}
+          value={fields.password}
+          onChange={handleFieldChange}
           placeholder="Enter your password"
         />
         <InputForm
           name="Repeat password"
+          id="passwordConfirmation"
           type="password"
-          value={passConfirmation}
-          onChange={event => setPassConfirmation(event.target.value)}
+          value={fields.passwordConfirmation}
+          onChange={handleFieldChange}
           placeholder="Repeat password"
         />
         <Button type="submit" name="Register" />
       </Container>
     </Form>
   );
+
+  const renderConfirmationForm = () => (
+    <Form onSubmit={handleConfirmationSubmit} id="confirm-form">
+      <Container id="register-form-div">
+        <Label>Confirm your account</Label>
+        <InputForm
+          name="Verification code"
+          id="verificationCode"
+          type="text"
+          value={fields.verificationCode}
+          onChange={handleFieldChange}
+          placeholder="Enter verification code"
+        />
+        <Button type="submit" name="Confirm your account" />
+      </Container>
+    </Form>
+  );
+
+  return isNewUser ? renderConfirmationForm() : renderRegisterForm();
 };
 
 const Form = styled.form`
   display: flex;
   justify-content: center;
-  padding: 2rem 0rem;
+  padding: 2rem 0;
   width: 100%;
 `;
 
@@ -86,4 +122,11 @@ const Container = styled.div`
   width: 50%;
 `;
 
-export default withLayout(Register);
+const mapDispatch = { userLoggedIn };
+
+export default withLayout(
+  connect(
+    null,
+    mapDispatch
+  )(Register)
+);
