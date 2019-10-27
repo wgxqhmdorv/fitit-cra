@@ -10,12 +10,12 @@ const Register = () => {
   const [email, setEmail] = useState("");
   const [pass, setPass] = useState("");
   const [passConfirmation, setPassConfirmation] = useState("");
-  const [errorState, setErrorState] = useState({
-    username: { msg: "", state: false },
-    email: { msg: "", state: false },
-    pass: { msg: "", state: false },
-    passConfirmation: { msg: "", state: false },
-    validation: false
+  const [errorMsg, setErrorMsg] = useState({
+    username: "",
+    email: "",
+    pass: "",
+    passConfirmation: "",
+    validation: ""
   });
 
   const typeOfErrors = {
@@ -24,7 +24,8 @@ const Register = () => {
     emailTaken: "This email is in use",
     emailNotValid: "This email is not valid",
     passNotValid: "Password must be longer than 3 characters",
-    passesNotMaching: "Passwords not matching"
+    passesNotMaching: "Passwords not matching",
+    validationError: "Please, fill in missing informations"
   };
 
   const temporaryUsers = [
@@ -49,7 +50,9 @@ const Register = () => {
       !validatePass() &&
       !comparePasswords()
     ) {
-      setErrorState(prevState => ({ ...prevState, validation: true }));
+      setErrorMsg(prevState => ({ ...prevState, validation: false }));
+    } else {
+      setErrorMsg(prevState => ({ ...prevState, validation: true }));
     }
   };
 
@@ -57,76 +60,59 @@ const Register = () => {
 
   const validateUsername = () => {
     if (username.length <= 3) {
-      setErrorState(prevState => ({
+      setErrorMsg(prevState => ({
         ...prevState,
-        username: { msg: typeOfErrors.usernameNotValid, state: true }
+        username: typeOfErrors.usernameNotValid
       }));
       return true;
     } else if (temporaryUsers.includes(username.toLowerCase())) {
-      setErrorState(prevState => ({
+      setErrorMsg(prevState => ({
         ...prevState,
-        username: { msg: typeOfErrors.usernameTaken, state: true }
+        username: typeOfErrors.usernameTaken
       }));
       return true;
     }
-    setErrorState(prevState => ({
-      ...prevState,
-      username: { msg: "", state: false }
-    }));
-    return false;
   };
   const validateEmail = () => {
     if (!validEmailRegex.test(email)) {
-      setErrorState(prevState => ({
+      setErrorMsg(prevState => ({
         ...prevState,
-        email: { msg: typeOfErrors.emailNotValid, state: true }
+        email: typeOfErrors.emailNotValid
       }));
       return true;
     } else if (temporaryEmails.includes(email)) {
-      setErrorState(prevState => ({
+      setErrorMsg(prevState => ({
         ...prevState,
-        email: { msg: typeOfErrors.emailTaken, state: true }
+        email: typeOfErrors.emailTaken
       }));
       return true;
     }
-    setErrorState(prevState => ({
-      ...prevState,
-      email: { msg: "", state: false }
-    }));
     return false;
   };
 
   const validatePass = () => {
     if (pass.length <= 3) {
-      setErrorState(prevState => ({
+      setErrorMsg(prevState => ({
         ...prevState,
-        pass: { msg: typeOfErrors.passNotValid, state: true }
+        pass: typeOfErrors.passNotValid
       }));
       return true;
     }
-    setErrorState(prevState => ({
-      ...prevState,
-      pass: { msg: "", state: false }
-    }));
     return false;
   };
 
   const comparePasswords = () => {
     if (pass !== passConfirmation && (pass === passConfirmation) !== "") {
-      setErrorState(prevState => ({
+      setErrorMsg(prevState => ({
         ...prevState,
-        passConfirmation: { msg: typeOfErrors.passesNotMaching, state: true }
+        passConfirmation: typeOfErrors.passesNotMaching
       }));
       return true;
     }
-    setErrorState(prevState => ({
-      ...prevState,
-      passConfirmation: { msg: "", state: false }
-    }));
     return false;
   };
 
-  return errorState.validation ? (
+  return errorMsg.validation === false ? (
     <Success />
   ) : (
     <Form onSubmit={handleOnSubmit} id="register-form">
@@ -137,8 +123,7 @@ const Register = () => {
           type="text"
           value={username}
           validate={validateUsername}
-          errorMsg={errorState.username.msg}
-          errorState={errorState.username.state}
+          errorMsg={errorMsg.username}
           onChange={event => setUsername(event.target.value)}
         />
         <InputForm
@@ -146,8 +131,7 @@ const Register = () => {
           type="text"
           value={email}
           validate={validateEmail}
-          errorMsg={errorState.email.msg}
-          errorState={errorState.email.state}
+          errorMsg={errorMsg.email}
           onChange={event => setEmail(event.target.value)}
         />
         <InputForm
@@ -155,20 +139,23 @@ const Register = () => {
           type="password"
           value={pass}
           validate={validatePass}
-          errorMsg={errorState.pass.msg}
-          errorState={errorState.pass.state}
+          errorMsg={errorMsg.pass}
           onChange={event => setPass(event.target.value)}
         />
         <InputForm
           name="Repeat password"
           type="password"
           value={passConfirmation}
-          validate={comparePasswords}
-          errorMsg={errorState.passConfirmation.msg}
-          errorState={errorState.passConfirmation.state}
+          validate={() => comparePasswords() && errorMsg.validation}
+          errorMsg={errorMsg.passConfirmation}
           onChange={event => setPassConfirmation(event.target.value)}
         />
         <Button id="register-button" type="submit" name="Register" />
+        {errorMsg.validation === true ? (
+          <Error>{typeOfErrors.validationError}</Error>
+        ) : (
+          ""
+        )}
       </Container>
     </Form>
   );
@@ -200,6 +187,12 @@ const Container = styled.div`
   border-radius: 10px;
   padding: 2rem 2rem;
   width: 50%;
+`;
+
+const Error = styled.p`
+  color: red;
+  text-align: center;
+  font-size: 13px;
 `;
 
 export default Register;

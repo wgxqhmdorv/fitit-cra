@@ -1,4 +1,5 @@
 import React from "react";
+import { useState } from "react";
 import styled from "styled-components";
 
 const InputForm = ({
@@ -8,9 +9,9 @@ const InputForm = ({
   placeholder,
   validate,
   errorMsg,
-  errorState,
-  onChange
+  onChange,
 }) => {
+  const [error, setError] = useState();
   return (
     <Container>
       <Label>{name}</Label>
@@ -18,14 +19,15 @@ const InputForm = ({
         type={type}
         id={name}
         value={value}
+        placeholder={placeholder}
+        onBlur={() => setError(validate)}
         onChange={event => {
+          setError(false);
           return onChange(event);
         }}
-        onBlur={validate}
-        placeholder={placeholder}
-        error={errorState}
+        error={error}
       />
-      {errorState ? <Error>{errorMsg}</Error> : ""}
+      {error ? <Error>{errorMsg}</Error> : ""}
     </Container>
   );
 };
