@@ -1,8 +1,8 @@
 import React from "react";
-import ItemList from "./itemList";
-import Form from "./form";
-import Category from "./category";
-import DatePicker from "./datePicker/datePicker";
+import ItemList from "./childComponents/itemList";
+import Form from "./childComponents/form";
+import Category from "./childComponents/category";
+import DatePicker from "../datePicker/datePicker";
 import styled from "styled-components";
 
 const List = () => (

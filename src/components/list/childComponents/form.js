@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { useState } from "react";
-import { addItem } from "../redux/features/listSlice";
+import { addItem } from "../../../redux/features/listSlice";
 import styled from "styled-components";
 
 const Form = ({ addItem }) => {
