@@ -1,18 +1,43 @@
-import React from "react";
+import React, { useEffect } from "react";
 import List from "./components/list/list";
 import Register from "./components/userAdmission/register";
 import Login from "./components/userAdmission/login";
-import { Provider } from "react-redux";
-import { initStore } from "./redux";
-import withLayout from "./components/layout/withLayout";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { Auth } from "aws-amplify";
+import { userLoggedIn } from "./redux/features/authSlice";
+import { connect } from "react-redux";
 
-const store = initStore();
+const App = ({ userLoggedIn }) => {
+  useEffect(() => {
+    onLoad();
+  }, []);
 
-const App = () => (
-  <Provider store={store}>
-    <Register />
-    <Login />
-  </Provider>
-);
+  async function onLoad() {
+    try {
+      const session = await Auth.currentSession();
+      console.log(session);
+      userLoggedIn();
+    } catch (e) {
+      if (e !== "No current user") {
+        alert(e);
+      }
+    }
+  }
 
-export default withLayout(App);
+  return (
+    <Router>
+      <Switch>
+        <Route path="/register" component={Register} />
+        <Route path="/login" component={Login} />
+        <Route path="/" component={List} />
+      </Switch>
+    </Router>
+  );
+};
+
+const mapDispatch = { userLoggedIn };
+
+export default connect(
+  null,
+  mapDispatch
+)(App);

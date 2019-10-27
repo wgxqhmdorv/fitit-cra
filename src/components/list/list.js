@@ -4,6 +4,7 @@ import Form from "./childComponents/form";
 import Category from "./childComponents/category";
 import DatePicker from "../datePicker/datePicker";
 import styled from "styled-components";
+import withLayout from "../layout/withLayout";
 
 const List = () => (
   <Container>
@@ -22,4 +23,4 @@ const Container = styled.div`
   }
 `;
 
-export default List;
+export default withLayout(List);

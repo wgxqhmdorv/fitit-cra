@@ -3,15 +3,30 @@ import { useState } from "react";
 import styled from "styled-components";
 import InputForm from "./childComponents/inputForm";
 import Button from "./childComponents/button";
+import { Auth } from "aws-amplify";
+import { userLoggedIn } from "../../redux/features/authSlice";
+import { connect } from "react-redux";
+import withLayout from "../layout/withLayout";
 
-const Login = () => {
+const Login = ({ userLoggedIn }) => {
   const [username, setUsername] = useState("");
   const [pass, setPass] = useState("");
 
-  const handleOnSubmit = event => {
+  const handleOnSubmit = async event => {
     event.preventDefault();
-    console.log(username);
-    console.log(pass);
+
+    try {
+      const user = await Auth.signIn(username, pass);
+      console.log(user);
+
+      const session = await Auth.currentSession();
+      console.log(session);
+
+      userLoggedIn();
+    } catch (e) {
+      console.log(e.message);
+    }
+
     setUsername("");
     setPass("");
   };
@@ -67,4 +82,11 @@ const Container = styled.div`
   width: 50%;
 `;
 
-export default Login;
+const mapDispatch = { userLoggedIn };
+
+export default withLayout(
+  connect(
+    null,
+    mapDispatch
+  )(Login)
+);

@@ -1,0 +1,19 @@
+{
+    "dev": {
+        "awscloudformation": {
+            "AuthRoleName": "amplify-fitit-frontend-dev-212200-authRole",
+            "UnauthRoleArn": "arn:aws:iam::453970617595:role/amplify-fitit-frontend-dev-212200-unauthRole",
+            "AuthRoleArn": "arn:aws:iam::453970617595:role/amplify-fitit-frontend-dev-212200-authRole",
+            "Region": "eu-central-1",
+            "DeploymentBucketName": "amplify-fitit-frontend-dev-212200-deployment",
+            "UnauthRoleName": "amplify-fitit-frontend-dev-212200-unauthRole",
+            "StackName": "amplify-fitit-frontend-dev-212200",
+            "StackId": "arn:aws:cloudformation:eu-central-1:453970617595:stack/amplify-fitit-frontend-dev-212200/6fe88230-f8f7-11e9-85a9-06dd2d585442"
+        },
+        "categories": {
+            "auth": {
+                "fititfrontendbb4b8f3b": {}
+            }
+        }
+    }
+}

@@ -1,0 +1,9 @@
+{
+	"auth": {
+		"fititfrontendbb4b8f3b": {
+			"service": "Cognito",
+			"providerPlugin": "awscloudformation",
+			"dependsOn": []
+		}
+	}
+}

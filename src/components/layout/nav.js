@@ -1,19 +1,33 @@
 import React from "react";
-import Link from "./link";
+import LinkButton from "./link";
 import { useState } from "react";
 import styled from "styled-components";
+import { connect } from "react-redux";
+import { userLoggedOut } from "../../redux/features/authSlice";
+import { Auth } from "aws-amplify";
 
-const Nav = ({ isVisible }) => {
+const Nav = ({ isVisible, isAuthenticated, userLoggedOut }) => {
   const [active, setActive] = useState("/");
+
+  const handleLogout = async () => {
+    await Auth.signOut();
+    userLoggedOut();
+  };
 
   return (
     <Navx isVisible={isVisible}>
-      <Link active={active} setActive={setActive} />
-      <Link href="list" active={active} setActive={setActive} />
-      <Link href="login" active={active} setActive={setActive} />
-      <Link href="logout" active={active} setActive={setActive} />
-      <Link href="statistics" active={active} setActive={setActive} />
-      <Link href="users" active={active} setActive={setActive} />
+      <LinkButton active={active} setActive={setActive} />
+      <LinkButton href="list" active={active} setActive={setActive} />
+      <LinkButton href="statistics" active={active} setActive={setActive} />
+      <LinkButton href="users" active={active} setActive={setActive} />
+      {!isAuthenticated ? (
+        <>
+          <LinkButton href="login" active={active} setActive={setActive} />
+          <LinkButton href="register" active={active} setActive={setActive} />
+        </>
+      ) : (
+        <LinkButton href="logout" active={active} setActive={setActive} />
+      )}
     </Navx>
   );
 };
@@ -33,4 +47,10 @@ const Navx = styled.nav`
   }
 `;
 
-export default Nav;
+const mapStateToProps = state => state.auth;
+const mapDispatchToProps = { userLoggedOut };
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Nav);

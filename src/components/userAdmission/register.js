@@ -3,6 +3,7 @@ import { useState } from "react";
 import styled from "styled-components";
 import InputForm from "./childComponents/inputForm";
 import Button from "./childComponents/button";
+import withLayout from "../layout/withLayout";
 
 const Register = () => {
   const [username, setUsername] = useState("");
@@ -86,4 +87,4 @@ const Container = styled.div`
   width: 50%;
 `;
 
-export default Register;
+export default withLayout(Register);
