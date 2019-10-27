@@ -1,26 +1,15 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import List from "./components/list";
+import { Provider } from "react-redux";
+import { initStore } from "./redux";
+import withLayout from "./components/withLayout";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+const store = initStore();
 
-export default App;
+const App = () => (
+  <Provider store={store}>
+    <List />
+  </Provider>
+);
+
+export default withLayout(App);
