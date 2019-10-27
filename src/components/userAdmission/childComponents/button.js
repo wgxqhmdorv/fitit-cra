@@ -8,7 +8,6 @@ const Button = ({ type, name }) => {
     </Container>
   );
 };
-// className={"bg-primary font-bold rounded py-2 px-10 mt-2"}
 
 const Container = styled.div`
   display: flex;

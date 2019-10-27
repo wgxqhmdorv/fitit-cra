@@ -1,8 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import { connect } from "react-redux";
-import { useState } from "react";
-import { addItem } from "../../../redux/features/listSlice";
 import styled from "styled-components";
+import { addItem } from "../../../redux/features/listSlice";
 
 const Form = ({ addItem }) => {
   const [input, setInput] = useState("");

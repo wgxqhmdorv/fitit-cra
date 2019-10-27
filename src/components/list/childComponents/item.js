@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
-import { deleteItem } from "../../../redux/features/listSlice";
 import styled from "styled-components";
+import { deleteItem } from "../../../redux/features/listSlice";
 
 const Item = ({ item, deleteItem }) => {
   return (

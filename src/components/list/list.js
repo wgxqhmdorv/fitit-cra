@@ -1,10 +1,10 @@
 import React from "react";
-import ItemList from "./childComponents/itemList";
-import Form from "./childComponents/form";
-import Category from "./childComponents/category";
-import DatePicker from "../datePicker/datePicker";
 import styled from "styled-components";
+import DatePicker from "../datePicker/datePicker";
 import withLayout from "../layout/withLayout";
+import Category from "./childComponents/category";
+import Form from "./childComponents/form";
+import ItemList from "./childComponents/itemList";
 
 const List = () => (
   <Container>

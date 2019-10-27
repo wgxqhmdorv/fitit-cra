@@ -1,6 +1,6 @@
 import React from "react";
-import Item from "./item";
 import { connect } from "react-redux";
+import Item from "./item";
 
 const ItemList = ({ list }) => (
   <div>

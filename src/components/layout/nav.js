@@ -1,10 +1,9 @@
-import React from "react";
-import LinkButton from "./link";
-import { useState } from "react";
-import styled from "styled-components";
-import { connect } from "react-redux";
-import { userLoggedOut } from "../../redux/features/authSlice";
 import { Auth } from "aws-amplify";
+import React, { useState } from "react";
+import { connect } from "react-redux";
+import styled from "styled-components";
+import { userLoggedOut } from "../../redux/features/authSlice";
+import LinkButton from "./link";
 
 const Nav = ({ isVisible, isAuthenticated, userLoggedOut }) => {
   const [active, setActive] = useState("/");

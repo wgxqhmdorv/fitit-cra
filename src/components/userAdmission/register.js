@@ -1,9 +1,8 @@
-import React from "react";
-import { useState } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
-import InputForm from "./childComponents/inputForm";
-import Button from "./childComponents/button";
 import withLayout from "../layout/withLayout";
+import Button from "./childComponents/button";
+import InputForm from "./childComponents/inputForm";
 
 const Register = () => {
   const [username, setUsername] = useState("");

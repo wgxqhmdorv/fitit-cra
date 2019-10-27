@@ -1,12 +1,11 @@
-import React from "react";
-import { useState } from "react";
-import styled from "styled-components";
-import InputForm from "./childComponents/inputForm";
-import Button from "./childComponents/button";
 import { Auth } from "aws-amplify";
-import { userLoggedIn } from "../../redux/features/authSlice";
+import React, { useState } from "react";
 import { connect } from "react-redux";
+import styled from "styled-components";
+import { userLoggedIn } from "../../redux/features/authSlice";
 import withLayout from "../layout/withLayout";
+import Button from "./childComponents/button";
+import InputForm from "./childComponents/inputForm";
 
 const Login = ({ userLoggedIn }) => {
   const [username, setUsername] = useState("");
@@ -16,12 +15,7 @@ const Login = ({ userLoggedIn }) => {
     event.preventDefault();
 
     try {
-      const user = await Auth.signIn(username, pass);
-      console.log(user);
-
-      const session = await Auth.currentSession();
-      console.log(session);
-
+      await Auth.signIn(username, pass);
       userLoggedIn();
     } catch (e) {
       console.log(e.message);

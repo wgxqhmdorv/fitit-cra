@@ -1,11 +1,11 @@
-import React, { useEffect } from "react";
-import List from "./components/list/list";
-import Register from "./components/userAdmission/register";
-import Login from "./components/userAdmission/login";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { Auth } from "aws-amplify";
-import { userLoggedIn } from "./redux/features/authSlice";
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import List from "./components/list/list";
+import Login from "./components/userAdmission/login";
+import Register from "./components/userAdmission/register";
+import { userLoggedIn } from "./redux/features/authSlice";
 
 const App = ({ userLoggedIn }) => {
   useEffect(() => {

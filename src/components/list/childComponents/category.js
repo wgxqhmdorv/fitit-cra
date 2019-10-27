@@ -1,6 +1,6 @@
 import React from "react";
-import styled from "styled-components";
 import { connect } from "react-redux";
+import styled from "styled-components";
 
 const reduceObjects = (array, key) =>
   array.reduce((prevValue, nextValue) => prevValue + nextValue[key], 0);

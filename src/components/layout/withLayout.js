@@ -1,7 +1,6 @@
-import React from "react";
-import Nav from "./nav";
-import { useState } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
+import Nav from "./nav";
 
 const withLayout = Page => {
   const Layout = () => {
