@@ -1,7 +1,16 @@
 import React from "react";
 import styled from "styled-components";
 
-const InputForm = ({ name, type, value, onChange, placeholder }) => {
+const InputForm = ({
+  name,
+  type,
+  value,
+  placeholder,
+  validate,
+  errorMsg,
+  errorState,
+  onChange
+}) => {
   return (
     <Container>
       <Label>{name}</Label>
@@ -9,10 +18,14 @@ const InputForm = ({ name, type, value, onChange, placeholder }) => {
         type={type}
         id={name}
         value={value}
-        onChange={onChange}
+        onChange={event => {
+          return onChange(event);
+        }}
+        onBlur={validate}
         placeholder={placeholder}
-        className={"w-full border-2 border-gray-400"}
+        error={errorState}
       />
+      {errorState ? <Error>{errorMsg}</Error> : ""}
     </Container>
   );
 };
@@ -32,22 +45,26 @@ const Label = styled.label`
 const Input = styled.input`
   background-color: #fdfdfe;
   border-width: 1px;
-  border-color: #e8f0fe;
+  border-color: ${({ error }) => (error ? "red" : "#e8f0fe")};
   border-radius: 5px;
   height: 2.5rem;
   line-height: normal;
   padding-left: 0.5rem;
   :focus {
     background-color: white;
-    box-shadow: 0 0 5px #9fe2b4;
+    box-shadow: 0 0 5px ${({ error }) => (error ? "red" : "#9fe2b4")};
     outline: none;
     border-width: 2px;
-    border-color: #9fe2b4;
+    border-color: ${({ error }) => (error ? "red" : "#9fe2b4")};
     border-radius: 5px;
   }
   :focus::placeholder {
     color: transparent;
   }
+`;
+
+const Error = styled.p`
+  color: red;
 `;
 
 export default InputForm;

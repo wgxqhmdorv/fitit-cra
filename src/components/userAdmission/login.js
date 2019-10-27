@@ -25,14 +25,12 @@ const Login = () => {
           type="text"
           value={username}
           onChange={event => setUsername(event.target.value)}
-          placeholder="Enter your username"
         />
         <InputForm
           name="Password"
           type="password"
           value={pass}
           onChange={event => setPass(event.target.value)}
-          placeholder="Enter your password"
         />
         <Button type="submit" name="Login" />
       </Container>
@@ -50,6 +48,7 @@ const Form = styled.form`
 const Label = styled.label`
   display: flex;
   justify-content: center;
+  text-align: center;
   padding-bottom: 0.25rem;
   margin-bottom: 1.25rem;
   border-bottom-width: 2px;
