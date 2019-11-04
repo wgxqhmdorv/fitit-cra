@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-const InputForm = ({ name, id, type, value, onChange, placeholder, autofocus }) => {
+const InputForm = ({ name, id, type, value, onChange, placeholder }) => {
   return (
     <Container>
       <Label>{name}</Label>

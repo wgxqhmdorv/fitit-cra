@@ -1,0 +1,34 @@
+{
+    "paths": [
+        {
+            "name": "/products",
+            "lambdaFunction": "getProductsLambda",
+            "privacy": {
+                "open": true
+            }
+        }
+    ],
+    "resourceName": "productsAPI",
+    "apiName": "productsAPI",
+    "functionArns": [
+        {
+            "lambdaFunction": "getProductsLambda"
+        }
+    ],
+    "privacy": {
+        "auth": 0,
+        "unauth": 0,
+        "authRoleName": "amplify-fitit-frontend-dev-212200-authRole",
+        "unAuthRoleName": "amplify-fitit-frontend-dev-212200-unauthRole"
+    },
+    "dependsOn": [
+        {
+            "category": "function",
+            "resourceName": "getProductsLambda",
+            "attributes": [
+                "Name",
+                "Arn"
+            ]
+        }
+    ]
+}

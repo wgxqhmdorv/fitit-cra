@@ -1,15 +1,15 @@
+import { navigate } from "@reach/router";
 import { Auth } from "aws-amplify";
-import styled from "styled-components";
 import React, { useState } from "react";
+import { connect } from "react-redux";
+import styled from "styled-components";
+import { userLoggedIn } from "../../redux/features/authSlice";
 import withLayout from "../layout/withLayout";
 import Button from "./childComponents/button";
-import InputForm from "./childComponents/inputForm";
 import useFormFields from "./childComponents/formHook";
-import { userLoggedIn } from "../../redux/features/authSlice";
-import { connect } from "react-redux";
-import { withRouter } from "react-router-dom";
+import InputForm from "./childComponents/inputForm";
 
-const Register = ({ userLoggedIn, history }) => {
+const Register = ({ userLoggedIn }) => {
   const [fields, handleFieldChange] = useFormFields({
     email: "",
     password: "",
@@ -38,8 +38,8 @@ const Register = ({ userLoggedIn, history }) => {
     try {
       await Auth.confirmSignUp(fields.email, fields.verificationCode);
       await Auth.signIn(fields.email, fields.password);
-      history.push("/");
       userLoggedIn();
+      navigate("/");
     } catch (e) {
       alert(e.message);
     }
@@ -129,5 +129,5 @@ export default withLayout(
   connect(
     null,
     mapDispatch
-  )(withRouter(Register))
+  )(Register)
 );

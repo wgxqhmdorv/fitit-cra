@@ -1,11 +1,11 @@
 import { Auth } from "aws-amplify";
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import List from "./components/list/list";
 import Login from "./components/userAdmission/login";
 import Register from "./components/userAdmission/register";
 import { userLoggedIn } from "./redux/features/authSlice";
+import { Router } from "@reach/router";
 
 const App = ({ userLoggedIn }) => {
   useEffect(() => {
@@ -26,11 +26,9 @@ const App = ({ userLoggedIn }) => {
 
   return (
     <Router>
-      <Switch>
-        <Route path="/register" component={Register} />
-        <Route path="/login" component={Login} />
-        <Route path="/" component={List} />
-      </Switch>
+      <Register path="/register" />
+      <Login path="/login" />
+      <List path="/" />
     </Router>
   );
 };
