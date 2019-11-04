@@ -7,8 +7,9 @@ import withLayout from "../layout/withLayout";
 import Button from "./childComponents/button";
 import InputForm from "./childComponents/inputForm";
 import useFormFields from "./childComponents/formHook";
+import { withRouter } from "react-router-dom";
 
-const Login = ({ userLoggedIn }) => {
+const Login = ({ userLoggedIn, history }) => {
   const [fields, handleFieldChange] = useFormFields({
     username: "",
     password: ""
@@ -19,6 +20,7 @@ const Login = ({ userLoggedIn }) => {
 
     try {
       await Auth.signIn(fields.username, fields.password);
+      history.push("/");
       userLoggedIn();
     } catch (e) {
       console.log(e.message);
@@ -82,5 +84,5 @@ export default withLayout(
   connect(
     null,
     mapDispatch
-  )(Login)
+  )(withRouter(Login))
 );
