@@ -1,16 +1,14 @@
 import React from "react";
-import ItemList from "./childComponents/itemList";
-import Form from "./childComponents/form";
-import Category from "./childComponents/category";
+import Meals from "./meals";
 import DatePicker from "../datePicker/datePicker";
 import styled from "styled-components";
 
 const List = () => (
   <Container>
     <DatePicker />
-    <Form />
-    <Category />
-    <ItemList />
+    <Meals meal={"Lunch"}/>
+    <Meals meal={"Dinner"}/>
+    <Meals meal={"Supper"}/>
   </Container>
 );
 
