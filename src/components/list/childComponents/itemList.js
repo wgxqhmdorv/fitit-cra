@@ -1,12 +1,15 @@
 import React from "react";
 import Item from "./item";
 import { connect } from "react-redux";
+import styled from "styled-components";
 
-const ItemList = ({ list }) => (
+const ItemList = ({ list, meal }) => (
   <div>
-    {list.map(item => (
-      <Item item={item} key={item.id} />
-    ))}
+    {list
+      .filter(item => item.meal === meal)
+      .map(item => (
+        <Item item={item} meal={meal} key={item.id} />
+      ))}
   </div>
 );
 

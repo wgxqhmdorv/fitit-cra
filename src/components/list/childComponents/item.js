@@ -28,7 +28,8 @@ const Item = ({ item, deleteItem }) => {
 };
 
 const Container = styled.div`
-  margin-bottom: 0.5rem;
+  margin-top: 0.2rem;
+  margin-left: 1rem;
   background: white;
   padding: 0.5rem;
 `;

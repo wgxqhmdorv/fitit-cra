@@ -8,7 +8,7 @@ const listSlice = createSlice({
       state.push(action.payload);
     },
     deleteItem(state, action) {
-      return state.filter(item => item.name !== action.payload.name);
+      return state.filter(item => item.id !== action.payload.id);
     }
   }
 });
