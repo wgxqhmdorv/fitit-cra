@@ -1,24 +1,26 @@
-import React from "react";
-import { connect } from "react-redux";
-import { useState } from "react";
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 import { addItem } from "../../../redux/features/listSlice";
 import styled from "styled-components";
 
-const Form = ({ addItem }) => {
+const Form = () => {
   const [input, setInput] = useState("");
+  const dispatch = useDispatch();
 
   const handleOnClick = event => {
     event.preventDefault();
     if (input !== "") {
-      addItem({
-        id: Math.round(Math.random() * 10000),
-        name: input,
-        weight: Math.round(Math.random() * 50 + 50),
-        calories: Math.round(Math.random() * 300 + 100),
-        carbohydrates: Math.round(Math.random() * 30 + 1),
-        proteins: Math.round(Math.random() * 15 + 1),
-        fats: Math.round(Math.random() * 10 + 1)
-      });
+      dispatch(
+        addItem({
+          id: Math.round(Math.random() * 10000),
+          name: input,
+          weight: Math.round(Math.random() * 50 + 50),
+          calories: Math.round(Math.random() * 300 + 100),
+          carbohydrates: Math.round(Math.random() * 30 + 1),
+          proteins: Math.round(Math.random() * 15 + 1),
+          fats: Math.round(Math.random() * 10 + 1)
+        })
+      );
       setInput("");
     }
   };
@@ -62,9 +64,4 @@ const Button = styled.button`
   margin: 0 1rem 0 1rem;
 `;
 
-const mapDispatch = { addItem };
-
-export default connect(
-  null,
-  mapDispatch
-)(Form);
+export default Form;

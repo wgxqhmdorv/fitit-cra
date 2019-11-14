@@ -1,14 +1,16 @@
 import React from "react";
-import { connect } from "react-redux";
+import { useDispatch } from "react-redux";
 import { deleteItem } from "../../../redux/features/listSlice";
 import styled from "styled-components";
 
-const Item = ({ item, deleteItem }) => {
+const Item = ({ item }) => {
+  const dispatch = useDispatch();
+
   return (
     <Container>
       <Flexbox>
         <p>{item.name}</p>
-        <button onClick={() => deleteItem(item)}>
+        <button onClick={() => dispatch(deleteItem(item))}>
           <Svg xmlns="http://www.w3.org/2000/svg">
             <path d="M16.24 14.83a1 1 0 0 1-1.41 1.41L12 13.41l-2.83 2.83a1 1 0 0 1-1.41-1.41L10.59 12 7.76 9.17a1 1 0 0 1 1.41-1.41L12 10.59l2.83-2.83a1 1 0 0 1 1.41 1.41L13.41 12l2.83 2.83z" />
           </Svg>
@@ -55,9 +57,4 @@ const Grid = styled.div`
   grid-template-columns: repeat(6, 1fr);
 `;
 
-const mapDispatchToProps = { deleteItem };
-
-export default connect(
-  null,
-  mapDispatchToProps
-)(Item);
+export default Item;

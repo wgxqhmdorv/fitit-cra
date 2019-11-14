@@ -1,15 +1,17 @@
 import React from "react";
 import Item from "./item";
-import { connect } from "react-redux";
+import { useSelector } from "react-redux";
 
-const ItemList = ({ list }) => (
-  <div>
-    {list.map(item => (
-      <Item item={item} key={item.id} />
-    ))}
-  </div>
-);
+const ItemList = () => {
+  const { list } = useSelector(state => state);
 
-const mapStateToProps = state => state;
+  return (
+    <div>
+      {list.map(item => (
+        <Item item={item} key={item.id} />
+      ))}
+    </div>
+  );
+};
 
-export default connect(mapStateToProps)(ItemList);
+export default ItemList;
