@@ -3,22 +3,27 @@ import { useState } from "react";
 import styled from "styled-components";
 import InputForm from "./childComponents/inputForm";
 import Button from "./childComponents/button";
+import axios from "axios";
 
 const Register = () => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
-  const [pass, setPass] = useState("");
-  const [passConfirmation, setPassConfirmation] = useState("");
+  const [password, setPassword] = useState("");
+  const [passwordConfirmation, setPasswordConfirmation] = useState("");
 
-  const handleOnSubmit = event => {
-    event.preventDefault();
-    console.log(username);
-    console.log(email);
-    console.log(pass);
-    setUsername("");
-    setEmail("");
-    setPass("");
-    setPassConfirmation("");
+  const handleOnSubmit = async e => {
+    e.preventDefault();
+    try {
+      const response = await axios.post("http://localhost:8000/users/", {
+        email,
+        username,
+        password,
+        confirm_password: passwordConfirmation
+      });
+      console.log(response.data);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
@@ -42,15 +47,15 @@ const Register = () => {
         <InputForm
           name="Password"
           type="password"
-          value={pass}
-          onChange={event => setPass(event.target.value)}
+          value={password}
+          onChange={event => setPassword(event.target.value)}
           placeholder="Enter your password"
         />
         <InputForm
           name="Repeat password"
           type="password"
-          value={passConfirmation}
-          onChange={event => setPassConfirmation(event.target.value)}
+          value={passwordConfirmation}
+          onChange={event => setPasswordConfirmation(event.target.value)}
           placeholder="Repeat password"
         />
         <Button type="submit" name="Register" />
