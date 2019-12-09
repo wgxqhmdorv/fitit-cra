@@ -1,19 +1,18 @@
 import React from "react";
-import { useState } from "react";
 import styled from "styled-components";
 import InputForm from "./childComponents/inputForm";
 import Button from "./childComponents/button";
+import useFormFields from "./childComponents/formHook";
 
 const Login = () => {
-  const [username, setUsername] = useState("");
-  const [pass, setPass] = useState("");
+  const [userFields, handleUserFieldChange] = useFormFields({
+    username: "",
+    password: ""
+  });
 
   const handleOnSubmit = event => {
     event.preventDefault();
-    console.log(username);
-    console.log(pass);
-    setUsername("");
-    setPass("");
+    console.log(userFields);
   };
 
   return (
@@ -23,15 +22,15 @@ const Login = () => {
         <InputForm
           name="Username"
           type="text"
-          value={username}
-          onChange={event => setUsername(event.target.value)}
+          value={userFields.username}
+          onChange={handleUserFieldChange}
           placeholder="Enter your username"
         />
         <InputForm
           name="Password"
           type="password"
-          value={pass}
-          onChange={event => setPass(event.target.value)}
+          value={userFields.password}
+          onChange={handleUserFieldChange}
           placeholder="Enter your password"
         />
         <Button type="submit" name="Login" />
