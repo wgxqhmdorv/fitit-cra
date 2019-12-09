@@ -1,7 +1,9 @@
-import React from "react";
-import styled from "styled-components";
-import InputForm from "./childComponents/inputForm";
 import Button from "./childComponents/button";
+import Container from "./childComponents/container";
+import Form from "./childComponents/form";
+import InputForm from "./childComponents/inputForm";
+import Label from "./childComponents/label";
+import React from "react";
 import useFormFields from "./childComponents/formHook";
 
 const Login = () => {
@@ -38,32 +40,5 @@ const Login = () => {
     </Form>
   );
 };
-
-const Form = styled.form`
-  display: flex;
-  justify-content: center;
-  padding: 2rem 0rem;
-  width: 100%;
-`;
-
-const Label = styled.label`
-  display: flex;
-  justify-content: center;
-  padding-bottom: 0.25rem;
-  margin-bottom: 1.25rem;
-  border-bottom-width: 2px;
-  border-bottom-color: #48bb78;
-  color: #24292e;
-  font-weight: 500;
-  font-size: 30px;
-`;
-
-const Container = styled.div`
-  background-color: white;
-  box-shadow: 0.5rem 0.5rem 1.5rem #e6e6e6;
-  border-radius: 10px;
-  padding: 2rem 2rem;
-  width: 50%;
-`;
 
 export default Login;
