@@ -1,25 +1,25 @@
 import React from "react";
-import { useState } from "react";
 import styled from "styled-components";
 import InputForm from "./childComponents/inputForm";
 import Button from "./childComponents/button";
+import useFormFields from "./childComponents/formHook";
 import axios from "axios";
 
 const Register = () => {
-  const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [passwordConfirmation, setPasswordConfirmation] = useState("");
+  const [userFields, handleUserFieldChange] = useFormFields({
+    username: "",
+    email: "",
+    password: "",
+    confirmPassword: ""
+  });
 
   const handleOnSubmit = async e => {
     e.preventDefault();
     try {
-      const response = await axios.post("http://localhost:8000/users/", {
-        email,
-        username,
-        password,
-        confirm_password: passwordConfirmation
-      });
+      const response = await axios.post(
+        "https://fitit-app.herokuapp.com/users/",
+        userFields
+      );
       console.log(response.data);
     } catch (err) {
       console.log(err);
@@ -33,29 +33,30 @@ const Register = () => {
         <InputForm
           name="Username"
           type="text"
-          value={username}
-          onChange={event => setUsername(event.target.value)}
+          value={userFields.username}
+          onChange={handleUserFieldChange}
           placeholder="Enter your username"
         />
         <InputForm
           name="Email"
           type="text"
-          value={email}
-          onChange={event => setEmail(event.target.value)}
+          value={userFields.email}
+          onChange={handleUserFieldChange}
           placeholder="Enter your email"
         />
         <InputForm
           name="Password"
           type="password"
-          value={password}
-          onChange={event => setPassword(event.target.value)}
+          value={userFields.password}
+          onChange={handleUserFieldChange}
           placeholder="Enter your password"
         />
         <InputForm
           name="Repeat password"
+          id="confirmPassword"
           type="password"
-          value={passwordConfirmation}
-          onChange={event => setPasswordConfirmation(event.target.value)}
+          value={userFields.passwordConfirmation}
+          onChange={handleUserFieldChange}
           placeholder="Repeat password"
         />
         <Button type="submit" name="Register" />

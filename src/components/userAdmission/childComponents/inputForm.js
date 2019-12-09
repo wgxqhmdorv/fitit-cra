@@ -1,13 +1,13 @@
 import React from "react";
 import styled from "styled-components";
 
-const InputForm = ({ name, type, value, onChange, placeholder }) => {
+const InputForm = ({ name, id, type, value, onChange, placeholder }) => {
   return (
     <Container>
       <Label>{name}</Label>
       <Input
         type={type}
-        id={name}
+        id={id ? id : name.toLowerCase()}
         value={value}
         onChange={onChange}
         placeholder={placeholder}
