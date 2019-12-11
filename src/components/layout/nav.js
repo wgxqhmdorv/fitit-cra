@@ -1,19 +1,27 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components/macro";
 import { useSelector } from "react-redux";
 import Link from "./link";
 
-const Nav = ({ isVisible }) => {
-  const [active, setActive] = useState("/");
+const Nav = ({ isVisible, uri }) => {
+  const props = { uri };
+  const { loggedIn } = useSelector(state => state.auth);
 
   return (
     <Navx isVisible={isVisible}>
-      <Link active={active} setActive={setActive} />
-      <Link href="list" active={active} setActive={setActive} />
-      <Link href="statistics" active={active} setActive={setActive} />
-      <Link href="users" active={active} setActive={setActive} />
-      <Link href="login" active={active} setActive={setActive} />
-      <Link href="logout" active={active} setActive={setActive} />
+      <Link {...props} />
+      <Link name="List" {...props} />
+      <Link name="Statistics" {...props} />
+      <Link name="Users" {...props} />
+
+      {!loggedIn ? (
+        <>
+          <Link name="Login" {...props} />
+          <Link name="Register" {...props} />
+        </>
+      ) : (
+        <Link name="Logout" {...props} />
+      )}
     </Navx>
   );
 };

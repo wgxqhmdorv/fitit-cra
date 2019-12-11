@@ -21,6 +21,8 @@ setInterval(() => {
   store.dispatch(fetchRefreshToken());
 }, 240000);
 
+const NotFound = () => <div>404 Not Found</div>;
+
 const App = () => (
   <StrictMode>
     <Provider store={store}>
@@ -28,6 +30,7 @@ const App = () => (
         <List path="/" />
         <Login path="login" />
         <Register path="/register" />
+        <NotFound default />
       </Router>
     </Provider>
   </StrictMode>

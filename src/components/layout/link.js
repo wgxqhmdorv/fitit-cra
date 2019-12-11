@@ -2,19 +2,17 @@ import React from "react";
 import { Link } from "@reach/router";
 import styled from "styled-components/macro";
 
-const LinkButton = ({ href, active, setActive }) => {
-  const url = href ? href : "/";
-  const componentName = href ? href[0].toUpperCase() + href.slice(1) : "Home";
+const LinkButton = ({ name = "Home", uri }) => {
+  let path = "/";
+  if (name !== "Home") {
+    path += name.toLowerCase();
+  }
 
-  const isActive = url === active;
+  const isActive = path === uri;
 
   return (
-    <AnchorButton
-      to={url}
-      isActive={isActive}
-      onClick={() => setActive(() => url)}
-    >
-      {componentName}
+    <AnchorButton to={path} isActive={isActive}>
+      {name}
     </AnchorButton>
   );
 };

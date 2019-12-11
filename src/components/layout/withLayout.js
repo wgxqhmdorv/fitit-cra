@@ -3,7 +3,7 @@ import styled from "styled-components/macro";
 import Nav from "./nav";
 
 const withLayout = Page => {
-  const Layout = () => {
+  const Layout = props => {
     const [navbarVisible, setNavbarVisible] = useState(false);
 
     const handleNavbarChange = () => setNavbarVisible(!navbarVisible);
@@ -13,10 +13,10 @@ const withLayout = Page => {
         <Header>
           <Image src="/logo.png" alt="FitIT logotype" />
           <Button onClick={handleNavbarChange}>=</Button>
-          <Nav isVisible={navbarVisible} />
+          <Nav isVisible={navbarVisible} {...props} />
         </Header>
         <div style={{ flexGrow: "1" }}>
-          <Page />
+          <Page {...props} />
         </div>
       </PageContainer>
     );

@@ -8,6 +8,7 @@ import InputForm from "./childComponents/inputForm";
 import Label from "./childComponents/label";
 import useFormFields from "./childComponents/formHook";
 import { getTokens } from "./../../redux/features/authSlice";
+import withLayout from "./../layout/withLayout";
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -55,4 +56,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default withLayout(Login);

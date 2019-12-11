@@ -1,11 +1,12 @@
 import React from "react";
+import axios from "axios";
 import InputForm from "./childComponents/inputForm";
 import Button from "./childComponents/button";
 import useFormFields from "./childComponents/formHook";
-import axios from "axios";
 import Form from "./childComponents/form";
 import Label from "./childComponents/label";
 import Container from "./childComponents/container";
+import withLayout from "./../layout/withLayout";
 
 const Register = () => {
   const [userFields, handleUserFieldChange] = useFormFields({
@@ -67,4 +68,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default withLayout(Register);
