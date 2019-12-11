@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "@reach/router";
-import styled from "styled-components";
+import styled from "styled-components/macro";
 
 const LinkButton = ({ href, active, setActive }) => {
   const url = href ? href : "/";

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Dater from "./childComponents/date";
 import moment from "moment";
-import styled from "styled-components";
+import styled from "styled-components/macro";
 
 const DatePicker = () => {
   const [actualDate, setActualDate] = useState(moment());
@@ -12,7 +12,7 @@ const DatePicker = () => {
     <Flex>
       <button onClick={() => setActualDate(calculateDay(-1))}>{"<"}</button>
       <Dater date={calculateDay(-1)} />
-      <Dater date={calculateDay(0)} primary/>
+      <Dater date={calculateDay(0)} primary />
       <Dater date={calculateDay(1)} />
       <button onClick={() => setActualDate(calculateDay(1))}>{">"}</button>
     </Flex>

@@ -1,6 +1,6 @@
-import { ReactComponent as Add } from "../../../Resources/plus.svg";
 import React from "react";
-import styled from "styled-components";
+import styled from "styled-components/macro";
+import { ReactComponent as Add } from "../../../Resources/plus.svg";
 
 const ButtonSearch = ({ setSearch }) => {
   return (

@@ -9,7 +9,6 @@ import { saveRefreshToken } from "./redux/localStorage";
 import List from "./components/list/list";
 import Login from "./components/userAdmission/login";
 import Register from "./components/userAdmission/register";
-import withLayout from "./components/layout/withLayout";
 
 const store = initStore();
 
@@ -34,4 +33,4 @@ const App = () => (
   </StrictMode>
 );
 
-export default withLayout(App);
+export default App;

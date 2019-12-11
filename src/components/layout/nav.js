@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
+import styled from "styled-components/macro";
+import { useSelector } from "react-redux";
 import Link from "./link";
-import { useState } from "react";
-import styled from "styled-components";
 
 const Nav = ({ isVisible }) => {
   const [active, setActive] = useState("/");
@@ -10,10 +10,10 @@ const Nav = ({ isVisible }) => {
     <Navx isVisible={isVisible}>
       <Link active={active} setActive={setActive} />
       <Link href="list" active={active} setActive={setActive} />
-      <Link href="login" active={active} setActive={setActive} />
-      <Link href="logout" active={active} setActive={setActive} />
       <Link href="statistics" active={active} setActive={setActive} />
       <Link href="users" active={active} setActive={setActive} />
+      <Link href="login" active={active} setActive={setActive} />
+      <Link href="logout" active={active} setActive={setActive} />
     </Navx>
   );
 };

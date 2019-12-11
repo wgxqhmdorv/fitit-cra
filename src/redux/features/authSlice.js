@@ -6,17 +6,19 @@ const refreshToken = loadRefreshToken();
 
 const authSlice = createSlice({
   name: "auth",
-  initialState: { refresh: refreshToken },
+  initialState: { refresh: refreshToken, loggedIn: false },
   reducers: {
     getTokens(state, action) {
-      return { ...state, ...action.payload };
+      return { ...state, ...action.payload, loggedIn: true };
     },
     refreshTokenSuccess(state, action) {
       state.access = action.payload.access;
+      state.loggedIn = true;
     },
     refreshTokenFailure(state, action) {
       state.access = undefined;
       state.refresh = undefined;
+      state.loggedIn = false;
     }
   }
 });
