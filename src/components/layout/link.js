@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "@reach/router";
 import styled from "styled-components";
 
 const LinkButton = ({ href, active, setActive }) => {
@@ -9,7 +10,7 @@ const LinkButton = ({ href, active, setActive }) => {
 
   return (
     <AnchorButton
-      href="/"
+      to={url}
       isActive={isActive}
       onClick={() => setActive(() => url)}
     >
@@ -18,7 +19,7 @@ const LinkButton = ({ href, active, setActive }) => {
   );
 };
 
-const AnchorButton = styled.a`
+const AnchorButton = styled(Link)`
   position: relative;
   width: 100%;
   display: block;

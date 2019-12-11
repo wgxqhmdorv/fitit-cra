@@ -1,11 +1,14 @@
+import React, { StrictMode } from "react";
+import { Router } from "@reach/router";
+
+import { Provider } from "react-redux";
+import { initStore } from "./redux";
+import { fetchRefreshToken } from "./redux/features/authSlice";
+import { saveRefreshToken } from "./redux/localStorage";
+
 import List from "./components/list/list";
 import Login from "./components/userAdmission/login";
-import { Provider } from "react-redux";
-import React from "react";
 import Register from "./components/userAdmission/register";
-import { fetchRefreshToken } from "./redux/features/authSlice";
-import { initStore } from "./redux";
-import { saveRefreshToken } from "./redux/localStorage";
 import withLayout from "./components/layout/withLayout";
 
 const store = initStore();
@@ -20,9 +23,15 @@ setInterval(() => {
 }, 240000);
 
 const App = () => (
-  <Provider store={store}>
-    <Login />
-  </Provider>
+  <StrictMode>
+    <Provider store={store}>
+      <Router>
+        <List path="/" />
+        <Login path="login" />
+        <Register path="/register" />
+      </Router>
+    </Provider>
+  </StrictMode>
 );
 
 export default withLayout(App);
