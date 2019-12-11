@@ -1,5 +1,6 @@
 import React from "react";
 import axios from "axios";
+import { navigate } from "@reach/router";
 import { useDispatch } from "react-redux";
 import Button from "./childComponents/button";
 import Container from "./childComponents/container";
@@ -7,7 +8,7 @@ import Form from "./childComponents/form";
 import InputForm from "./childComponents/inputForm";
 import Label from "./childComponents/label";
 import useFormFields from "./childComponents/formHook";
-import { getTokens } from "./../../redux/features/authSlice";
+import { setTokens } from "./../../redux/features/authSlice";
 import withLayout from "./../layout/withLayout";
 
 const Login = () => {
@@ -25,8 +26,9 @@ const Login = () => {
         "https://fitit-app.herokuapp.com/users/get_token/",
         userFields
       );
-      dispatch(getTokens(response.data));
+      dispatch(setTokens(response.data));
       console.log(response.data);
+      navigate("/");
     } catch (err) {
       console.log(err);
     }

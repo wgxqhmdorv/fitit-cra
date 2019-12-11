@@ -8,14 +8,14 @@ const authSlice = createSlice({
   name: "auth",
   initialState: { refresh: refreshToken, loggedIn: false },
   reducers: {
-    getTokens(state, action) {
+    setTokens(state, action) {
       return { ...state, ...action.payload, loggedIn: true };
     },
     refreshTokenSuccess(state, action) {
       state.access = action.payload.access;
       state.loggedIn = true;
     },
-    refreshTokenFailure(state, action) {
+    deleteTokens(state, action) {
       state.access = undefined;
       state.refresh = undefined;
       state.loggedIn = false;
@@ -24,9 +24,9 @@ const authSlice = createSlice({
 });
 
 export const {
-  getTokens,
+  setTokens,
   refreshTokenSuccess,
-  refreshTokenFailure
+  deleteTokens
 } = authSlice.actions;
 
 export default authSlice.reducer;
@@ -42,8 +42,22 @@ export const fetchRefreshToken = () => async dispatch => {
       dispatch(refreshTokenSuccess(response.data));
     } catch (err) {
       console.log(err);
+      dispatch(deleteTokens());
+    }
+  }
+};
 
-      dispatch(refreshTokenFailure());
+export const blacklistToken = () => async dispatch => {
+  const token = loadRefreshToken();
+  if (token) {
+    try {
+      await axios.post(
+        "https://fitit-app.herokuapp.com/users/blacklist_token/",
+        { token }
+      );
+      dispatch(deleteTokens());
+    } catch (err) {
+      console.log(err);
     }
   }
 };

@@ -1,5 +1,6 @@
 import React from "react";
 import axios from "axios";
+import { navigate } from "@reach/router";
 import InputForm from "./childComponents/inputForm";
 import Button from "./childComponents/button";
 import useFormFields from "./childComponents/formHook";
@@ -24,6 +25,7 @@ const Register = () => {
         userFields
       );
       console.log(response.data);
+      navigate("/login");
     } catch (err) {
       console.log(err);
     }

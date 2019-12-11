@@ -1,11 +1,20 @@
 import React from "react";
+import { navigate } from "@reach/router";
 import styled from "styled-components/macro";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { blacklistToken } from "./../../redux/features/authSlice";
 import Link from "./link";
+import NavButton from "./navButton";
 
 const Nav = ({ isVisible, uri }) => {
   const props = { uri };
   const { loggedIn } = useSelector(state => state.auth);
+  const dispatch = useDispatch();
+
+  const logout = () => {
+    dispatch(blacklistToken());
+    navigate("/");
+  };
 
   return (
     <Navx isVisible={isVisible}>
@@ -20,7 +29,7 @@ const Nav = ({ isVisible, uri }) => {
           <Link name="Register" {...props} />
         </>
       ) : (
-        <Link name="Logout" {...props} />
+        <NavButton onClick={logout}>Logout</NavButton>
       )}
     </Navx>
   );
