@@ -1,20 +1,34 @@
+import React from "react";
+import axios from "axios";
+import { useDispatch } from "react-redux";
 import Button from "./childComponents/button";
 import Container from "./childComponents/container";
 import Form from "./childComponents/form";
 import InputForm from "./childComponents/inputForm";
 import Label from "./childComponents/label";
-import React from "react";
 import useFormFields from "./childComponents/formHook";
+import { getTokens } from "./../../redux/features/authSlice";
 
 const Login = () => {
+  const dispatch = useDispatch();
   const [userFields, handleUserFieldChange] = useFormFields({
     username: "",
     password: ""
   });
 
-  const handleOnSubmit = event => {
-    event.preventDefault();
-    console.log(userFields);
+  const handleOnSubmit = async e => {
+    e.preventDefault();
+
+    try {
+      const response = await axios.post(
+        "https://fitit-app.herokuapp.com/users/get_token/",
+        userFields
+      );
+      dispatch(getTokens(response.data));
+      console.log(response.data);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
