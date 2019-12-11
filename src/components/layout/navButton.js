@@ -1,11 +1,10 @@
 import styled from "styled-components/macro";
 
 const NavButton = styled.button`
+  display: block;
   position: relative;
   width: 100%;
-  display: block;
-  padding: 0 0.5rem 0 3rem;
-  margin: 0.5rem 0 0.5rem 0;
+  margin: 0.5rem 0;
   line-height: 2;
   color: ${({ isActive }) => (isActive ? "black" : "#A9A9A9")};
 

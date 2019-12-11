@@ -29,7 +29,9 @@ const Nav = ({ isVisible, uri }) => {
           <Link name="Register" {...props} />
         </>
       ) : (
-        <NavButton onClick={logout}>Logout</NavButton>
+        <NavButton onClick={logout} style={{ padding: "0 0.5rem 0 3rem" }}>
+          Logout
+        </NavButton>
       )}
     </Navx>
   );
