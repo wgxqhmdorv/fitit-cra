@@ -1,61 +1,56 @@
 import React, {useState} from "react";
+import styled from "styled-components";
+import AutoSuggest from "./autoSuggest"
 import {useDispatch} from "react-redux";
 import {addItem} from "../../../redux/features/listSlice";
-import styled from "styled-components";
 
 const Form = ({meal, setSearch}) => {
     const [input, setInput] = useState("");
+    const [suggestions, setSuggestions] = useState([]);
+    const [product, setProduct] = useState({});
     const dispatch = useDispatch();
 
     const handleOnClick = event => {
         event.preventDefault();
-        if (input !== "") {
+        if (input !== "" && !!Object.entries(product).length) {
             dispatch(
                 addItem({
                     meal: meal,
-                    id: Math.round(Math.random() * 10000),
+                    id: product.id,
                     name: input,
                     weight: Math.round(Math.random() * 50 + 50),
-                    calories: Math.round(Math.random() * 300 + 100),
-                    carbohydrates: Math.round(Math.random() * 30 + 1),
-                    proteins: Math.round(Math.random() * 15 + 1),
-                    fats: Math.round(Math.random() * 10 + 1)
+                    calories: product.calories,
+                    carbohydrates: product.carbohydrates,
+                    proteins: product.proteins,
+                    fats: product.fats
                 })
             );
-
             setInput("");
+            setProduct({});
         }
         setSearch(false);
     };
 
     return (
-        <StyledForm onSubmit={handleOnClick}>
+        <form onSubmit={handleOnClick}>
             <Container>
-                <Input
-                    type="text"
-                    value={input}
-                    onChange={event => setInput(event.target.value)}
-                    placeholder="Search for your product"
+                <AutoSuggest
+                    input={input}
+                    setInput={setInput}
+                    suggestions={suggestions}
+                    setSuggestions={setSuggestions}
+                    setProduct={setProduct}
                 />
                 <Button type="submit">Add</Button>
             </Container>
-        </StyledForm>
+        </form>
     );
 };
-
-const StyledForm = styled.form``;
 
 const Container = styled.div`
   padding: 0.56rem 0;
   display: flex;
   justify-content: space-between;
-`;
-
-const Input = styled.input`
-  border-radius: 5px;
-  padding: 0 0.5rem;
-  flex-grow: 1;
-  color: #4a5568;
 `;
 
 const Button = styled.button`

@@ -1,7 +1,6 @@
 import React from "react";
 import Item from "./item";
 import {useSelector} from "react-redux";
-import styled from "styled-components";
 
 const ItemList = ({meal}) => {
     const {list} = useSelector(state => state);
