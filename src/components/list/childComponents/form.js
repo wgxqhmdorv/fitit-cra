@@ -1,62 +1,149 @@
 import React, { useState } from "react";
 import styled from "styled-components/macro";
+import AutoSuggest from "./autoSuggest";
 import { useDispatch } from "react-redux";
-
-import { addItem } from "../../../redux/features/listSlice";
+import { addItem, deleteItem } from "../../../redux/features/listSlice";
 
 const Form = ({ meal, setSearch }) => {
   const [input, setInput] = useState("");
+  const [amount, setAmount] = useState("");
+  const [suggestions, setSuggestions] = useState([]);
+  const [product, setProduct] = useState({});
   const dispatch = useDispatch();
 
   const handleOnClick = event => {
     event.preventDefault();
-    if (input !== "") {
+    if (input !== "" && !!Object.entries(product).length) {
+      dispatch(deleteItem(product));
       dispatch(
         addItem({
           meal: meal,
-          id: Math.round(Math.random() * 10000),
+          id: product.id,
           name: input,
-          weight: Math.round(Math.random() * 50 + 50),
-          calories: Math.round(Math.random() * 300 + 100),
-          carbohydrates: Math.round(Math.random() * 30 + 1),
-          proteins: Math.round(Math.random() * 15 + 1),
-          fats: Math.round(Math.random() * 10 + 1)
+          weight: amount ? amount : 0,
+          calories: product.calories,
+          carbohydrates: product.carbohydrates,
+          proteins: product.proteins,
+          fats: product.fats
         })
       );
-
       setInput("");
+      setProduct({});
     }
     setSearch(false);
   };
+  const handleEnter = event => {
+    if (event.keyCode === 13) {
+      const form = event.target.form;
+      const index = Array.prototype.indexOf.call(form, event.target);
+      form.elements[index + 1].focus();
+      event.preventDefault();
+    }
+  };
+
+  const amountOnChange = event => {
+    if (event.target.value >= 0 && event.target.value[0] !== "0")
+      setAmount(event.target.value);
+  };
+  const amountOnBlur = event => {
+    if (event.target.value === "") setAmount("1");
+  };
 
   return (
-    <StyledForm onSubmit={handleOnClick}>
+    <form onSubmit={handleOnClick}>
+      <SuggestContainer>
+        <AutoSuggest
+          input={input}
+          setInput={setInput}
+          suggestions={suggestions}
+          setSuggestions={setSuggestions}
+          setProduct={setProduct}
+          handlEnter={handleEnter}
+        />
+      </SuggestContainer>
       <Container>
         <Input
-          type="text"
-          value={input}
-          onChange={event => setInput(event.target.value)}
-          placeholder="Search for your product"
+          value={amount}
+          onChange={amountOnChange}
+          onBlur={amountOnBlur}
+          onKeyDown={handleEnter}
+          pattern="[0-9]*"
+          placeholder="Weight"
         />
         <Button type="submit">Add</Button>
       </Container>
-    </StyledForm>
+    </form>
   );
 };
 
-const StyledForm = styled.form``;
+const SuggestContainer = styled.div`
+  & .react-autosuggest__container {
+    width: 100%;
+    position: relative;
+  }
+
+  & .react-autosuggest__input {
+    width: 100%;
+    padding: 0.6rem 0.7rem;
+    font-family: Helvetica, sans-serif;
+    font-weight: 300;
+    font-size: 16px;
+    border: 1px solid #48bb78;
+    border-radius: 4px;
+  }
+  & .react-autosuggest__input--focused {
+    outline: none;
+  }
+  & .react-autosuggest__input--open {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+  & .react-autosuggest__suggestions-container--open {
+    display: block;
+    position: absolute;
+    margin-top: -1px;
+    width: 100%;
+    border: 1px solid #48bb78;
+    background-color: #fff;
+    font-family: Helvetica, sans-serif;
+    font-weight: 300;
+    font-size: 16px;
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+  }
+
+  & .react-autosuggest__suggestions-list {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+  }
+
+  & .react-autosuggest__suggestion {
+    cursor: pointer;
+    padding: 0.6rem 0.7rem;
+  }
+
+  & .react-autosuggest__suggestion--highlighted {
+    background-color: #ddd;
+  }
+`;
 
 const Container = styled.div`
   padding: 0.56rem 0;
   display: flex;
-  justify-content: space-between;
 `;
 
 const Input = styled.input`
-  border-radius: 5px;
-  padding: 0 0.5rem;
-  flex-grow: 1;
-  color: #4a5568;
+  width: 15%;
+  padding: 0.6rem 0.7rem;
+  font-family: Helvetica, sans-serif;
+  font-weight: 300;
+  font-size: 16px;
+  border: 1px solid #48bb78;
+  border-radius: 4px;
+  :focus {
+    outline: none;
+  }
 `;
 
 const Button = styled.button`
