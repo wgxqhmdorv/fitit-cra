@@ -1,80 +1,79 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
-import AutoSuggest from "./autoSuggest"
-import {useDispatch} from "react-redux";
-import {addItem, deleteItem} from "../../../redux/features/listSlice";
+import AutoSuggest from "./autoSuggest";
+import { useDispatch } from "react-redux";
+import { addItem, deleteItem } from "../../../redux/features/listSlice";
 
-const Form = ({meal, setSearch}) => {
-    const [input, setInput] = useState("");
-    const [amount, setAmount] = useState("");
-    const [suggestions, setSuggestions] = useState([]);
-    const [product, setProduct] = useState({});
-    const dispatch = useDispatch();
+const Form = ({ meal, setSearch }) => {
+  const [input, setInput] = useState("");
+  const [amount, setAmount] = useState("");
+  const [suggestions, setSuggestions] = useState([]);
+  const [product, setProduct] = useState({});
+  const dispatch = useDispatch();
 
-    const handleOnClick = event => {
-        event.preventDefault();
-        if (input !== "" && !!Object.entries(product).length) {
-            dispatch(deleteItem(product));
-            dispatch(
-                addItem({
-                    meal: meal,
-                    id: product.id,
-                    name: input,
-                    weight: (amount ? amount : 0),
-                    calories: product.calories,
-                    carbohydrates: product.carbohydrates,
-                    proteins: product.proteins,
-                    fats: product.fats
-                })
-            );
-            setInput("");
-            setProduct({});
-        }
-        setSearch(false);
-    };
-    const handleEnter = event => {
-        if (event.keyCode === 13) {
-            const form = event.target.form;
-            const index = Array.prototype.indexOf.call(form, event.target);
-            form.elements[index + 1].focus();
-            event.preventDefault();
-        }
-    };
+  const handleOnClick = event => {
+    event.preventDefault();
+    if (input !== "" && !!Object.entries(product).length) {
+      dispatch(deleteItem(product));
+      dispatch(
+        addItem({
+          meal: meal,
+          id: product.id,
+          name: input,
+          weight: amount ? amount : 0,
+          calories: product.calories,
+          carbohydrates: product.carbohydrates,
+          proteins: product.proteins,
+          fats: product.fats
+        })
+      );
+      setInput("");
+      setProduct({});
+    }
+    setSearch(false);
+  };
+  const handleEnter = event => {
+    if (event.keyCode === 13) {
+      const form = event.target.form;
+      const index = Array.prototype.indexOf.call(form, event.target);
+      form.elements[index + 1].focus();
+      event.preventDefault();
+    }
+  };
 
-    const amountOnChange = event => {
-        if (event.target.value >= 0 && event.target.value[0] !== "0")
-            setAmount(event.target.value);
-    };
-    const amountOnBlur = event => {
-        if (event.target.value === "")
-            setAmount("1");
-    };
+  const amountOnChange = event => {
+    if (event.target.value >= 0 && event.target.value[0] !== "0")
+      setAmount(event.target.value);
+  };
+  const amountOnBlur = event => {
+    if (event.target.value === "") setAmount("1");
+  };
 
-    return (
-        <form onSubmit={handleOnClick}>
-            <SuggestContainer>
-                <AutoSuggest
-                    input={input}
-                    setInput={setInput}
-                    suggestions={suggestions}
-                    setSuggestions={setSuggestions}
-                    setProduct={setProduct}
-                    handlEnter={handleEnter}
-                />
-            </SuggestContainer>
-            <Container>
-                <Input
-                    value={amount}
-                    onChange={amountOnChange}
-                    onBlur={amountOnBlur}
-                    onKeyDown={handleEnter}
-                    pattern="[0-9]*"
-                    placeholder="Weight"
-                />
-                <Button type="submit">Add</Button>
-            </Container>
-        </form>
-    )
+  return (
+    <form onSubmit={handleOnClick}>
+      <SuggestContainer>
+        <AutoSuggest
+          input={input}
+          setInput={setInput}
+          suggestions={suggestions}
+          setSuggestions={setSuggestions}
+          setProduct={setProduct}
+          handlEnter={handleEnter}
+        />
+      </SuggestContainer>
+      <Container>
+        <Input
+          value={amount}
+          onChange={amountOnChange}
+          onBlur={amountOnBlur}
+          onKeyDown={handleEnter}
+          pattern="[0-9]*"
+          placeholder="Weight"
+        />
+        <Button type="submit">Add</Button>
+      </Container>
+    </form>
+  );
 };
 
 const SuggestContainer = styled.div`
