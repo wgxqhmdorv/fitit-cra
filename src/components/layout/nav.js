@@ -1,19 +1,38 @@
 import React from "react";
+import { navigate } from "@reach/router";
+import styled from "styled-components/macro";
+import { useSelector, useDispatch } from "react-redux";
+import { blacklistToken } from "./../../redux/features/authSlice";
 import Link from "./link";
-import { useState } from "react";
-import styled from "styled-components";
+import NavButton from "./navButton";
 
-const Nav = ({ isVisible }) => {
-  const [active, setActive] = useState("/");
+const Nav = ({ isVisible, uri }) => {
+  const props = { uri };
+  const { loggedIn } = useSelector(state => state.auth);
+  const dispatch = useDispatch();
+
+  const logout = () => {
+    dispatch(blacklistToken());
+    navigate("/");
+  };
 
   return (
     <Navx isVisible={isVisible}>
-      <Link active={active} setActive={setActive} />
-      <Link href="list" active={active} setActive={setActive} />
-      <Link href="login" active={active} setActive={setActive} />
-      <Link href="logout" active={active} setActive={setActive} />
-      <Link href="statistics" active={active} setActive={setActive} />
-      <Link href="users" active={active} setActive={setActive} />
+      <Link {...props} />
+      <Link name="List" {...props} />
+      <Link name="Statistics" {...props} />
+      <Link name="Users" {...props} />
+
+      {!loggedIn ? (
+        <>
+          <Link name="Login" {...props} />
+          <Link name="Register" {...props} />
+        </>
+      ) : (
+        <NavButton onClick={logout} style={{ padding: "0 0.5rem 0 3rem" }}>
+          Logout
+        </NavButton>
+      )}
     </Navx>
   );
 };

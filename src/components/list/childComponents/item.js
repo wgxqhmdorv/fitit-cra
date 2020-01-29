@@ -1,7 +1,7 @@
 import React from "react";
+import styled from "styled-components/macro";
 import { useDispatch } from "react-redux";
 import { deleteItem } from "../../../redux/features/listSlice";
-import styled from "styled-components";
 
 const Item = ({ item }) => {
   const dispatch = useDispatch();

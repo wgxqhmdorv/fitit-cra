@@ -1,46 +1,47 @@
-import React, {useState} from "react";
-import {useDispatch} from "react-redux";
-import {addItem} from "../../../redux/features/listSlice";
-import styled from "styled-components";
+import React, { useState } from "react";
+import styled from "styled-components/macro";
+import { useDispatch } from "react-redux";
 
-const Form = ({meal, setSearch}) => {
-    const [input, setInput] = useState("");
-    const dispatch = useDispatch();
+import { addItem } from "../../../redux/features/listSlice";
 
-    const handleOnClick = event => {
-        event.preventDefault();
-        if (input !== "") {
-            dispatch(
-                addItem({
-                    meal: meal,
-                    id: Math.round(Math.random() * 10000),
-                    name: input,
-                    weight: Math.round(Math.random() * 50 + 50),
-                    calories: Math.round(Math.random() * 300 + 100),
-                    carbohydrates: Math.round(Math.random() * 30 + 1),
-                    proteins: Math.round(Math.random() * 15 + 1),
-                    fats: Math.round(Math.random() * 10 + 1)
-                })
-            );
+const Form = ({ meal, setSearch }) => {
+  const [input, setInput] = useState("");
+  const dispatch = useDispatch();
 
-            setInput("");
-        }
-        setSearch(false);
-    };
+  const handleOnClick = event => {
+    event.preventDefault();
+    if (input !== "") {
+      dispatch(
+        addItem({
+          meal: meal,
+          id: Math.round(Math.random() * 10000),
+          name: input,
+          weight: Math.round(Math.random() * 50 + 50),
+          calories: Math.round(Math.random() * 300 + 100),
+          carbohydrates: Math.round(Math.random() * 30 + 1),
+          proteins: Math.round(Math.random() * 15 + 1),
+          fats: Math.round(Math.random() * 10 + 1)
+        })
+      );
 
-    return (
-        <StyledForm onSubmit={handleOnClick}>
-            <Container>
-                <Input
-                    type="text"
-                    value={input}
-                    onChange={event => setInput(event.target.value)}
-                    placeholder="Search for your product"
-                />
-                <Button type="submit">Add</Button>
-            </Container>
-        </StyledForm>
-    );
+      setInput("");
+    }
+    setSearch(false);
+  };
+
+  return (
+    <StyledForm onSubmit={handleOnClick}>
+      <Container>
+        <Input
+          type="text"
+          value={input}
+          onChange={event => setInput(event.target.value)}
+          placeholder="Search for your product"
+        />
+        <Button type="submit">Add</Button>
+      </Container>
+    </StyledForm>
+  );
 };
 
 const StyledForm = styled.form``;

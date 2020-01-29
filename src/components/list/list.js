@@ -1,14 +1,15 @@
 import React from "react";
+import styled from "styled-components/macro";
 import Meals from "./meals";
 import DatePicker from "../datePicker/datePicker";
-import styled from "styled-components";
+import withLayout from "./../layout/withLayout";
 
 const List = () => (
   <Container>
     <DatePicker />
-    <Meals meal={"Lunch"}/>
-    <Meals meal={"Dinner"}/>
-    <Meals meal={"Supper"}/>
+    <Meals meal={"Lunch"} />
+    <Meals meal={"Dinner"} />
+    <Meals meal={"Supper"} />
   </Container>
 );
 
@@ -20,4 +21,4 @@ const Container = styled.div`
   }
 `;
 
-export default List;
+export default withLayout(List);
