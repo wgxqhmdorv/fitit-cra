@@ -6,11 +6,11 @@ const ItemList = ({meal}) => {
     const {list} = useSelector(state => state);
     return (
         <div>
-            {list
-                .filter(item => item.meal === meal)
-                .map(item => (
+            {
+                list.filter(item => item.meal === meal).map(item => (
                     <Item item={item} meal={meal} key={item.id}/>
-                ))}
+                ))
+            }
         </div>
     );
 };

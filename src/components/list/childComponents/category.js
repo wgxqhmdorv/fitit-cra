@@ -12,7 +12,7 @@ const reduceObjects = (array, key, meal) =>
     );
 
 
-const Category = ({meal, setSearch}) => {
+const Category = ({meal, setSearch, setMeal}) => {
     const {list} = useSelector(state => state);
     return (
         <Container>
@@ -25,7 +25,7 @@ const Category = ({meal, setSearch}) => {
                     <p>{reduceObjects(list, "fats", meal)} g</p>
                 </Grid>
             </div>
-            <ButtonSearch setSearch={setSearch}/>
+            <ButtonSearch setSearch={setSearch} meal={meal} setMeal={setMeal}/>
         </Container>
     );
 };
