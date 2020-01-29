@@ -2,8 +2,9 @@ import React from "react";
 import { useState } from "react";
 import Meals from "./meals";
 import DatePicker from "../datePicker/datePicker";
-import styled from "styled-components";
+import styled from "styled-components/macro";
 import Form from "./childComponents/form";
+import withLayout from "./../layout/withLayout";
 
 const List = () => {
   const [search, setSearch] = useState(false);
@@ -32,4 +33,4 @@ const Container = styled.div`
   }
 `;
 
-export default List;
+export default withLayout(List);

@@ -1,6 +1,6 @@
 import React from "react";
 import moment from "moment";
-import styled from "styled-components";
+import styled from "styled-components/macro";
 
 const Date = ({ date, primary }) => {
   const calculateDay = () => {

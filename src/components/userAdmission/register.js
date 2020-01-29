@@ -1,24 +1,34 @@
 import React from "react";
-import { useState } from "react";
-import styled from "styled-components";
+import axios from "axios";
+import { navigate } from "@reach/router";
 import InputForm from "./childComponents/inputForm";
 import Button from "./childComponents/button";
+import useFormFields from "./childComponents/formHook";
+import Form from "./childComponents/form";
+import Label from "./childComponents/label";
+import Container from "./childComponents/container";
+import withLayout from "./../layout/withLayout";
 
 const Register = () => {
-  const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
-  const [pass, setPass] = useState("");
-  const [passConfirmation, setPassConfirmation] = useState("");
+  const [userFields, handleUserFieldChange] = useFormFields({
+    username: "",
+    email: "",
+    password: "",
+    confirmPassword: ""
+  });
 
-  const handleOnSubmit = event => {
-    event.preventDefault();
-    console.log(username);
-    console.log(email);
-    console.log(pass);
-    setUsername("");
-    setEmail("");
-    setPass("");
-    setPassConfirmation("");
+  const handleOnSubmit = async e => {
+    e.preventDefault();
+    try {
+      const response = await axios.post(
+        "https://fitit-app.herokuapp.com/users/",
+        userFields
+      );
+      console.log(response.data);
+      navigate("/login");
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
@@ -28,29 +38,30 @@ const Register = () => {
         <InputForm
           name="Username"
           type="text"
-          value={username}
-          onChange={event => setUsername(event.target.value)}
+          value={userFields.username}
+          onChange={handleUserFieldChange}
           placeholder="Enter your username"
         />
         <InputForm
           name="Email"
           type="text"
-          value={email}
-          onChange={event => setEmail(event.target.value)}
+          value={userFields.email}
+          onChange={handleUserFieldChange}
           placeholder="Enter your email"
         />
         <InputForm
           name="Password"
           type="password"
-          value={pass}
-          onChange={event => setPass(event.target.value)}
+          value={userFields.password}
+          onChange={handleUserFieldChange}
           placeholder="Enter your password"
         />
         <InputForm
           name="Repeat password"
+          id="confirmPassword"
           type="password"
-          value={passConfirmation}
-          onChange={event => setPassConfirmation(event.target.value)}
+          value={userFields.passwordConfirmation}
+          onChange={handleUserFieldChange}
           placeholder="Repeat password"
         />
         <Button type="submit" name="Register" />
@@ -59,31 +70,4 @@ const Register = () => {
   );
 };
 
-const Form = styled.form`
-  display: flex;
-  justify-content: center;
-  padding: 2rem 0rem;
-  width: 100%;
-`;
-
-const Label = styled.label`
-  display: flex;
-  justify-content: center;
-  padding-bottom: 0.25rem;
-  margin-bottom: 1.25rem;
-  border-bottom-width: 2px;
-  border-bottom-color: #48bb78;
-  color: #24292e;
-  font-weight: 500;
-  font-size: 30px;
-`;
-
-const Container = styled.div`
-  background-color: white;
-  box-shadow: 0.5rem 0.5rem 1.5rem #e6e6e6;
-  border-radius: 10px;
-  padding: 2rem 2rem;
-  width: 50%;
-`;
-
-export default Register;
+export default withLayout(Register);

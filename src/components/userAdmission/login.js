@@ -1,19 +1,37 @@
 import React from "react";
-import { useState } from "react";
-import styled from "styled-components";
-import InputForm from "./childComponents/inputForm";
+import axios from "axios";
+import { navigate } from "@reach/router";
+import { useDispatch } from "react-redux";
 import Button from "./childComponents/button";
+import Container from "./childComponents/container";
+import Form from "./childComponents/form";
+import InputForm from "./childComponents/inputForm";
+import Label from "./childComponents/label";
+import useFormFields from "./childComponents/formHook";
+import { setTokens } from "./../../redux/features/authSlice";
+import withLayout from "./../layout/withLayout";
 
 const Login = () => {
-  const [username, setUsername] = useState("");
-  const [pass, setPass] = useState("");
+  const dispatch = useDispatch();
+  const [userFields, handleUserFieldChange] = useFormFields({
+    username: "",
+    password: ""
+  });
 
-  const handleOnSubmit = event => {
-    event.preventDefault();
-    console.log(username);
-    console.log(pass);
-    setUsername("");
-    setPass("");
+  const handleOnSubmit = async e => {
+    e.preventDefault();
+
+    try {
+      const response = await axios.post(
+        "https://fitit-app.herokuapp.com/users/get_token/",
+        userFields
+      );
+      dispatch(setTokens(response.data));
+      console.log(response.data);
+      navigate("/");
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
@@ -23,15 +41,15 @@ const Login = () => {
         <InputForm
           name="Username"
           type="text"
-          value={username}
-          onChange={event => setUsername(event.target.value)}
+          value={userFields.username}
+          onChange={handleUserFieldChange}
           placeholder="Enter your username"
         />
         <InputForm
           name="Password"
           type="password"
-          value={pass}
-          onChange={event => setPass(event.target.value)}
+          value={userFields.password}
+          onChange={handleUserFieldChange}
           placeholder="Enter your password"
         />
         <Button type="submit" name="Login" />
@@ -40,31 +58,4 @@ const Login = () => {
   );
 };
 
-const Form = styled.form`
-  display: flex;
-  justify-content: center;
-  padding: 2rem 0rem;
-  width: 100%;
-`;
-
-const Label = styled.label`
-  display: flex;
-  justify-content: center;
-  padding-bottom: 0.25rem;
-  margin-bottom: 1.25rem;
-  border-bottom-width: 2px;
-  border-bottom-color: #48bb78;
-  color: #24292e;
-  font-weight: 500;
-  font-size: 30px;
-`;
-
-const Container = styled.div`
-  background-color: white;
-  box-shadow: 0.5rem 0.5rem 1.5rem #e6e6e6;
-  border-radius: 10px;
-  padding: 2rem 2rem;
-  width: 50%;
-`;
-
-export default Login;
+export default withLayout(Login);

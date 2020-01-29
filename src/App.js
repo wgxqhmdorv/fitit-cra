@@ -1,15 +1,39 @@
-import React from "react";
-import List from "./components/list/list";
+import React, { StrictMode } from "react";
+import { Router } from "@reach/router";
+
 import { Provider } from "react-redux";
 import { initStore } from "./redux";
-import withLayout from "./components/layout/withLayout";
+import { fetchRefreshToken } from "./redux/features/authSlice";
+import { saveRefreshToken } from "./redux/localStorage";
+
+import List from "./components/list/list";
+import Login from "./components/userAdmission/login";
+import Register from "./components/userAdmission/register";
 
 const store = initStore();
 
+store.subscribe(() => {
+  saveRefreshToken(store.getState());
+});
+
+store.dispatch(fetchRefreshToken());
+setInterval(() => {
+  store.dispatch(fetchRefreshToken());
+}, 240000);
+
+const NotFound = () => <div>404 Not Found</div>;
+
 const App = () => (
-  <Provider store={store}>
-    <List />
-  </Provider>
+  <StrictMode>
+    <Provider store={store}>
+      <Router>
+        <List path="/" />
+        <Login path="login" />
+        <Register path="/register" />
+        <NotFound default />
+      </Router>
+    </Provider>
+  </StrictMode>
 );
 
-export default withLayout(App);
+export default App;
