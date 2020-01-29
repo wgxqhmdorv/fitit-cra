@@ -15,7 +15,9 @@ const Date = ({ date, primary }) => {
   return (
     <Button primary={primary}>
       <div style={{ fontWeight: "700" }}>{calculateDay()}</div>
-      <div style={{ fontSize: "0.75rem", paddingBottom: "2px" }}>{date.format("dddd")}</div>
+      <div style={{ fontSize: "0.75rem", paddingBottom: "2px" }}>
+        {date.format("dddd")}
+      </div>
     </Button>
   );
 };

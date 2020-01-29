@@ -2,13 +2,14 @@ import { ReactComponent as Add } from "../../../Resources/plus.svg";
 import React from "react";
 import styled from "styled-components";
 
-const ButtonSearch = ({ setSearch }) => {
+const ButtonSearch = ({ setSearch, meal, setMeal }) => {
   return (
     <ButtonContainer>
       <ButtonStyled
         onClick={event => {
           event.stopPropagation();
           setSearch(true);
+          setMeal(meal);
         }}
       >
         <Svg>

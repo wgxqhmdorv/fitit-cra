@@ -12,7 +12,7 @@ const DatePicker = () => {
     <Flex>
       <button onClick={() => setActualDate(calculateDay(-1))}>{"<"}</button>
       <Dater date={calculateDay(-1)} />
-      <Dater date={calculateDay(0)} primary/>
+      <Dater date={calculateDay(0)} primary />
       <Dater date={calculateDay(1)} />
       <button onClick={() => setActualDate(calculateDay(1))}>{">"}</button>
     </Flex>
