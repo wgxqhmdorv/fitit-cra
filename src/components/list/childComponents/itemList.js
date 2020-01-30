@@ -3,11 +3,11 @@ import Item from "./item";
 import { useSelector } from "react-redux";
 
 const ItemList = ({ meal }) => {
-  const { list } = useSelector(state => state);
+  const list = useSelector(state => state.list);
   return (
     <div>
       {list
-        .filter(item => item.meal === meal)
+        .filter(item => item.mealtime === meal)
         .map(item => (
           <Item item={item} meal={meal} key={item.id} />
         ))}

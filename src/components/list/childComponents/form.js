@@ -1,8 +1,13 @@
 import React, { useState } from "react";
+import axios from "axios";
 import styled from "styled-components/macro";
 import AutoSuggest from "./autoSuggest";
-import { useDispatch } from "react-redux";
-import { addItem, deleteItem } from "../../../redux/features/listSlice";
+import { useDispatch, useSelector } from "react-redux";
+import moment from "moment";
+import {
+  deleteItem,
+  getItems
+} from "../../../redux/features/listSlice";
 
 const Form = ({ meal, setSearch }) => {
   const [input, setInput] = useState("");
@@ -10,23 +15,23 @@ const Form = ({ meal, setSearch }) => {
   const [suggestions, setSuggestions] = useState([]);
   const [product, setProduct] = useState({});
   const dispatch = useDispatch();
+  const date = useSelector(state => moment(state.date).format("YYYY-MM-DD"));
 
-  const handleOnClick = event => {
+  const handleOnClick = async event => {
     event.preventDefault();
     if (input !== "" && !!Object.entries(product).length) {
       dispatch(deleteItem(product));
-      dispatch(
-        addItem({
-          meal: meal,
-          id: product.id,
-          name: input,
+      await axios.post(
+        "https://fitit-app.herokuapp.com/products/userProducts/",
+        {
+          mealtime: meal,
+          product: product.id,
           weight: amount ? amount : 0,
-          calories: product.calories,
-          carbohydrates: product.carbohydrates,
-          proteins: product.proteins,
-          fats: product.fats
-        })
+          date
+        }
       );
+      dispatch(getItems());
+
       setInput("");
       setProduct({});
     }

@@ -6,12 +6,13 @@ import ButtonSearch from "./buttonSearch";
 const reduceObjects = (array, key, meal) =>
   array.reduce(
     (prevValue, nextValue) =>
-      nextValue.meal === meal ? prevValue + nextValue[key] : prevValue,
+      nextValue.mealtime === meal ? prevValue + nextValue[key] : prevValue,
     0
   );
 
 const Category = ({ meal, setSearch, setMeal }) => {
   const { list } = useSelector(state => state);
+
   return (
     <Container>
       <div style={{ flex: 1 }}>
