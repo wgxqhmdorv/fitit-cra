@@ -63,7 +63,7 @@ const Form = ({ meal, setSearch }) => {
           suggestions={suggestions}
           setSuggestions={setSuggestions}
           setProduct={setProduct}
-          handlEnter={handleEnter}
+          handleEnter={handleEnter}
         />
       </SuggestContainer>
       <Container>
