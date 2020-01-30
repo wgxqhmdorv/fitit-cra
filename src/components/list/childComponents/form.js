@@ -4,7 +4,10 @@ import styled from "styled-components/macro";
 import AutoSuggest from "./autoSuggest";
 import { useDispatch, useSelector } from "react-redux";
 import moment from "moment";
-import { addItem, deleteItem } from "../../../redux/features/listSlice";
+import {
+  deleteItem,
+  getItems
+} from "../../../redux/features/listSlice";
 
 const Form = ({ meal, setSearch }) => {
   const [input, setInput] = useState("");
@@ -18,12 +21,16 @@ const Form = ({ meal, setSearch }) => {
     event.preventDefault();
     if (input !== "" && !!Object.entries(product).length) {
       dispatch(deleteItem(product));
-      axios.post("http://127.0.0.1:8000/products/userProducts/", {
-        mealtime: meal,
-        product: product.id,
-        weight: amount ? amount : 0,
-        date
-      });
+      await axios.post(
+        "https://fitit-app.herokuapp.com/products/userProducts/",
+        {
+          mealtime: meal,
+          product: product.id,
+          weight: amount ? amount : 0,
+          date
+        }
+      );
+      dispatch(getItems());
 
       setInput("");
       setProduct({});

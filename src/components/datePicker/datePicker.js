@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import Dater from "./childComponents/date";
 import moment from "moment";
 import styled from "styled-components/macro";

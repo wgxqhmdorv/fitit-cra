@@ -9,6 +9,14 @@ const listSlice = createSlice({
       state.push(action.payload);
       console.log(action.payload);
     },
+    setState(state, action) {
+      const products = [];
+      action.payload.forEach(product =>
+        products.push({ ...product.product, ...product })
+      );
+      console.log(action.payload);
+      return products;
+    },
     deleteItem(state, action) {
       return state.filter(item => item.id !== action.payload.id);
     }
@@ -26,6 +34,17 @@ export const addItemAsync = action => async dispatch => {
   }
 };
 
-export const { addItem, deleteItem } = listSlice.actions;
+export const getItems = () => async dispatch => {
+  try {
+    const products = await axios.get(
+      "https://fitit-app.herokuapp.com/products/userProducts/"
+    );
+    dispatch(setState(products.data));
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const { addItem, deleteItem, setState } = listSlice.actions;
 
 export default listSlice.reducer;
