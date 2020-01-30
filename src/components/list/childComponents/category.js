@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components/macro";
 import { useSelector } from "react-redux";
 import ButtonSearch from "./buttonSearch";
+import moment from "moment";
 
 const reduceObjects = (array, key, meal) =>
   array.reduce(
@@ -11,7 +12,9 @@ const reduceObjects = (array, key, meal) =>
   );
 
 const Category = ({ meal, setSearch, setMeal }) => {
-  const { list } = useSelector(state => state);
+  let { list } = useSelector(state => state);
+  const date = useSelector(state => moment(state.date).format("YYYY-MM-DD"));
+  list = list.filter(item => item.date === date);
 
   return (
     <Container>

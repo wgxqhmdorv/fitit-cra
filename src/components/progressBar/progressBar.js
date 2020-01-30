@@ -1,15 +1,20 @@
 import React from "react";
 import styled from "styled-components/macro";
 import { useSelector } from "react-redux";
+import moment from "moment";
 
 const ProgressBar = ({ name, max, color }) => {
-  const list = useSelector(state => state.list);
+  const date = useSelector(state => moment(state.date).format("YYYY-MM-DD"));
+  const list = useSelector(state =>
+    state.list.filter(item => item.date === date)
+  );
+
+  // list = list.filter(item => item.date === date);
   const value = list.reduce(
     (prevValue, nextValue) => prevValue + nextValue[name],
     0
   );
   const percent = (value / max) * 100;
-  console.log(value);
 
   return (
     <Container>
