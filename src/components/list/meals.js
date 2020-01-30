@@ -5,14 +5,17 @@ import Collapsible from "react-collapsible";
 import { useDispatch, useSelector } from "react-redux";
 import { getItems } from "../../redux/features/listSlice";
 import styled from "styled-components/macro";
+import axios from "axios";
 
 const Meals = ({ meal, setSearch, setMeal }) => {
   const dispatch = useDispatch();
   const { loggedIn } = useSelector(state => state.auth);
+  const accessToken = useSelector(state => state.auth.access);
 
   useEffect(() => {
+    axios.defaults.headers.Authorization = "Bearer " + accessToken;
     dispatch(getItems());
-  }, [dispatch, loggedIn]);
+  }, [dispatch, loggedIn, accessToken]);
 
   return (
     <Container>

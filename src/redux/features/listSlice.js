@@ -10,7 +10,6 @@ const listSlice = createSlice({
       action.payload.forEach(product =>
         products.push({ ...product.product, ...product })
       );
-      console.log(action.payload);
       return products;
     },
     deleteItem(state, action) {
@@ -26,6 +25,7 @@ export const getItems = () => async dispatch => {
     );
     dispatch(setState(products.data));
   } catch (err) {
+    dispatch(setState([]));
     console.log(err);
   }
 };

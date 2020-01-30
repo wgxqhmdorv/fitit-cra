@@ -9,6 +9,7 @@ const authSlice = createSlice({
   initialState: { refresh: refreshToken, loggedIn: false },
   reducers: {
     setTokens(state, action) {
+      axios.defaults.headers.Authorization = "Bearer " + action.payload.access;
       return { ...state, ...action.payload, loggedIn: true };
     },
     refreshTokenSuccess(state, action) {
@@ -20,6 +21,7 @@ const authSlice = createSlice({
       state.access = undefined;
       state.refresh = undefined;
       state.loggedIn = false;
+      axios.defaults.headers.Authorization = "";
     }
   }
 });
