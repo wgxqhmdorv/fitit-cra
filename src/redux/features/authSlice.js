@@ -13,6 +13,7 @@ const authSlice = createSlice({
     },
     refreshTokenSuccess(state, action) {
       state.access = action.payload.access;
+      axios.defaults.headers.Authorization = "Bearer " + action.payload.access;
       state.loggedIn = true;
     },
     deleteTokens(state, action) {
