@@ -1,5 +1,5 @@
 import axios from "axios";
-import { createSlice } from "redux-starter-kit";
+import { createSlice } from "@reduxjs/toolkit";
 import { loadRefreshToken } from "./../localStorage";
 
 const refreshToken = loadRefreshToken();
