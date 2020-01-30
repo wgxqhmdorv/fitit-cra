@@ -30,10 +30,10 @@ const Item = ({ item }) => {
 };
 
 const Container = styled.div`
-  margin-top: 0.2rem;
-  margin-left: 1rem;
+  margin-top: 0;
+  margin-left: 0;
   background: white;
-  padding: 0.5rem;
+  padding: 0.7rem;
 `;
 
 const Flexbox = styled.div`
